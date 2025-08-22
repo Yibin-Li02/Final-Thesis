@@ -29,19 +29,6 @@ Final-Thesis/
 
 ## Setup Instructions
 
-### 1. Clone the repository
-```bash
-git clone https://github.com/Yibin-Li02/Final-Thesis.git
-cd Final-Thesis
-```
-
-### 2. Create a Python virtual environment
-```bash
-python3 -m venv venv
-source venv/bin/activate   # On Windows: venv\Scripts\activate
-```
-
-### 3. Install dependencies
 Install the Virtual Ecosystem model and its requirements:
 ```bash
 pip install virtual-ecosystem
@@ -57,14 +44,17 @@ For more details, see the [official VE documentation](https://virtual-ecosystem.
 The `Scripts/` folder contains helper scripts for analysis and plotting results.  
 Example:
 ```bash
-cd Scripts
-python example_plot.py
+python morris.py
+python morris1.py
+python sobol.py
+python PDP.py
+python Script/combine.py --dir ../Result_data --out ./plots
 ```
 
 ### Sensitivity Analysis (`sensitivity.py`)
 The core sensitivity analysis is implemented in:
 ```
-virtual_ecosystem/sensitivity.py
+virtual_ecosystem/virtual_ecosystem/sensitivity.py
 ```
 
 Run it with:
@@ -74,7 +64,7 @@ python -m virtual_ecosystem.sensitivity
 
 Optionally, specify output directories for data and plots:
 ```bash
-python -m virtual_ecosystem.sensitivity --output_dir ../Result_data --plot_dir ../Result_plots
+OMP_NUM_THREADS=1 poetry run python sensitivity.py     --config_dir /home/yibin-li/ve/virtual_ecosystem/virtual_ecosystem/config2     --out_base   SA_OUTPUT     --morris_trajectories 30     --sobol_base 512     --cpu 12
 ```
 
 *(Adjust flags depending on script implementation.)*
