@@ -34,10 +34,11 @@ LEGEND_LABELSPACING = 0.3
 LEGEND_HANDLELEN = 1.2
 LEGEND_HANDLETEXTPAD = 0.5
 # ------------------------------------------
+BASE_DIR = Path(__file__).resolve().parent  # relative path
+NPZ_DIR = BASE_DIR.parent / "virtual_ecosystem"
+OUT_PDF = BASE_DIR / "PDP_25C_allpH.pdf"# For 27 temperature, change the "25C" to "27C"
+OUT_PDF.parent.mkdir(parents=True, exist_ok=True)
 
-
-NPZ_DIR = Path("/home/yibin-li/ve/virtual_ecosystem")   # relative path
-OUT_PDF = "PDP_25C_allpH.pdf" # For 27 temperature, change the "25C" to "27C"
 
 BINS = 100  # box number
 # =====================
@@ -51,7 +52,8 @@ if not npz_files:
 
 def pH_from_name(fname: str):
     """25-35.npz → 3.5"""
-    m = re.search(r"25-(\d+)", fname)
+    m = re.search(r"25-(\d+)", fname) # For 27 temperature, change the "25C" to "27C"
+
     if not m:
         raise ValueError(f"File format error: {fname}")
     return float(m.group(1)) / 10.0
