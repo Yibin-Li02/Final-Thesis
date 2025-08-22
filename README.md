@@ -62,7 +62,7 @@ Run it with:
 OMP_NUM_THREADS=1 poetry run python sensitivity.py     --config_dir /home/yibin-li/ve/virtual_ecosystem/virtual_ecosystem/config2     --out_base   SA_OUTPUT     --morris_trajectories 30     --sobol_base 512     --cpu 12
 ```
 
-*(Adjust flags depending on script implementation.)*
+*(Adjust script depending on actual conditions.)*
 
 ---
 
