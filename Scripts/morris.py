@@ -10,6 +10,7 @@ Generate μ★ heat-maps with:
 
 import re, sys, warnings
 from pathlib import Path
+import argparse
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
@@ -40,7 +41,21 @@ plt.rcParams.update({
 default_font = FontProperties(family=rcParams.get('font.sans-serif', ['DejaVu Sans']))
 
 # ---------- CONFIG ----------
-DATA_DIR   = Path("/home/yibin-li/ve")     # folder containing the Excel files
+BASE_DIR   = Path(__file__).resolve().parent          # folder containing morris.py
+DATA_DIR   = BASE_DIR.parent / "Result_data"                # sibling folder: ../Excel
+OUT_DIR    = BASE_DIR / "plots"                       # save PDFs here
+OUT_DIR.mkdir(parents=True, exist_ok=True)
+
+# allow CLI overrides if you want
+ap = argparse.ArgumentParser(add_help=False)
+ap.add_argument("--data-dir", default=str(DATA_DIR))
+ap.add_argument("--out-dir",  default=str(OUT_DIR))
+args, _ = ap.parse_known_args()
+DATA_DIR = Path(args.data_dir).expanduser().resolve()
+OUT_DIR  = Path(args.out_dir).expanduser().resolve()
+OUT_DIR.mkdir(parents=True, exist_ok=True)
+
+
 TEMPS      = [25, 27]                      # temperatures to include
 PH_KEEP    = ["3.5", "4.5", "5.5", "6.5", "8"]
 HEAT_CMAP  = cm.get_cmap("coolwarm")       # blue→red
