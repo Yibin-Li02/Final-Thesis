@@ -30,7 +30,7 @@ plt.rcParams.update({
 # ==== Defaults relative to this file ====
 BASE_DIR = Path(__file__).resolve().parent         # .../Script
 DEFAULT_DATA_DIR = BASE_DIR.parent / "Result_data"       # sibling: .../Excel
-DEFAULT_OUT_DIR  = BASE_DIR / "plots"              # save PDFs here
+DEFAULT_OUT_DIR  = BASE_DIR / "Result_plots"              # save PDFs here
 DEFAULT_OUT_DIR.mkdir(parents=True, exist_ok=True)
 # ========================================
 # ========== Config (edit if needed) ========== #
