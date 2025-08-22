@@ -4,6 +4,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
 import warnings
+from pathlib import Path
 from matplotlib import rcParams
 from matplotlib.font_manager import FontProperties
 
@@ -29,12 +30,19 @@ plt.rcParams.update({
 default_font = FontProperties(family=rcParams.get('font.sans-serif', ['DejaVu Sans']))
 
 # ------------------ Configuration ------------------
-DATA_DIR = '/home/yibin-li/ve'
+BASE_DIR = Path(__file__).resolve().parent           # folder containing morris2.py
+# If the Excel files are in a sibling folder called "Excel":
+DATA_DIR = str((BASE_DIR.parent / "Result_data").resolve())
+# If they are next to the script instead, use:
+# DATA_DIR = str(BASE_DIR.resolve())
+
 FILES = [
     '25bacteria.xlsx', '25fungi.xlsx', '25maom.xlsx', '25pom.xlsx',
     '27bacteria.xlsx', '27fungi.xlsx', '27maom.xlsx', '27pom.xlsx',
 ]
-OUT_DIR = os.path.join(DATA_DIR, 'morris_scatter_pdfs')
+
+# Save PDFs next to the script (in a subfolder)
+OUT_DIR = str((BASE_DIR / "plots").resolve())
 os.makedirs(OUT_DIR, exist_ok=True)
 
 PH_COLOURS = {
