@@ -48,7 +48,7 @@ python morris.py
 python morris1.py
 python sobol.py
 python PDP.py
-python Script/combine.py --dir ../Result_data --out ./plots
+python Scripts/combine.py --dir ../Result_data --out ./plots
 ```
 
 ### Sensitivity Analysis (`sensitivity.py`)
