@@ -59,11 +59,6 @@ virtual_ecosystem/virtual_ecosystem/sensitivity.py
 
 Run it with:
 ```bash
-python -m virtual_ecosystem.sensitivity
-```
-
-Optionally, specify output directories for data and plots:
-```bash
 OMP_NUM_THREADS=1 poetry run python sensitivity.py     --config_dir /home/yibin-li/ve/virtual_ecosystem/virtual_ecosystem/config2     --out_base   SA_OUTPUT     --morris_trajectories 30     --sobol_base 512     --cpu 12
 ```
 
