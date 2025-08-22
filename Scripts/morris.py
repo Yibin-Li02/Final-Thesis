@@ -43,7 +43,7 @@ default_font = FontProperties(family=rcParams.get('font.sans-serif', ['DejaVu Sa
 # ---------- CONFIG ----------
 BASE_DIR   = Path(__file__).resolve().parent          # folder containing morris.py
 DATA_DIR   = BASE_DIR.parent / "Result_data"                # sibling folder: ../Excel
-OUT_DIR    = BASE_DIR / "plots"                       # save PDFs here
+OUT_DIR    = BASE_DIR / "Result_plots"                       # save PDFs here
 OUT_DIR.mkdir(parents=True, exist_ok=True)
 
 # allow CLI overrides if you want
