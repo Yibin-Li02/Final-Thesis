@@ -1,11 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-"""
-PDP 绘图：25°C 下，不同 pH（文件名 25-xx.npz）
-Fungi = 实线 (SEF), Bacteria = 虚线 (SEB)
-reference_cue_logit (RCL) = X[:, 1]
-"""
+
 
 import numpy as np
 import matplotlib.pyplot as plt
@@ -38,27 +34,28 @@ LEGEND_LABELSPACING = 0.3
 LEGEND_HANDLELEN = 1.2
 LEGEND_HANDLETEXTPAD = 0.5
 # ------------------------------------------
+BASE_DIR = Path(__file__).resolve().parent  # relative path
+NPZ_DIR = BASE_DIR.parent / "virtual_ecosystem"
+OUT_PDF = BASE_DIR / "PDP_25C_allpH.pdf"# For 27 temperature, change the "25C" to "27C"
+OUT_PDF.parent.mkdir(parents=True, exist_ok=True)
 
-# ====== 用户配置 ======
-NPZ_DIR = Path("/home/yibin-li/ve/virtual_ecosystem")   # 存放 25-xx.npz 的目录
-OUT_PDF = "PDP_25C_allpH.pdf"
 
-BINS = 100  # reference_cue_logit 分多少箱
+BINS = 100  # box number
 # =====================
 
-# 颜色列表（可自行增加）
 COLORS = ["#1f77b4", "#ff7f0e", "#2ca02c", "#d62728", "#9467bd"]
 
-# 扫描所有 25-xx.npz
-npz_files = sorted(NPZ_DIR.glob("25-*.npz"))
+
+npz_files = sorted(NPZ_DIR.glob("25-*.npz")) # For 27 temperature, change the "25-" to "27-"
 if not npz_files:
-    raise FileNotFoundError(f"{NPZ_DIR} 中未找到 25-*.npz 文件")
+    raise FileNotFoundError(f"{NPZ_DIR} can't find 25-*.npz")
 
 def pH_from_name(fname: str):
     """25-35.npz → 3.5"""
-    m = re.search(r"25-(\d+)", fname)
+    m = re.search(r"25-(\d+)", fname) # For 27 temperature, change the "25C" to "27C"
+
     if not m:
-        raise ValueError(f"文件名格式错误: {fname}")
+        raise ValueError(f"File format error: {fname}")
     return float(m.group(1)) / 10.0
 
 plt.figure(figsize=(15, 6))
@@ -74,10 +71,10 @@ for npz_path in npz_files:
     X, Y = data["X"], data["Y"]
 
     ref_cue = X[:, 1]  # reference_cue_logit (RCL)
-    bacteria = Y[:, 2]
-    fungi = Y[:, 4]
+    bacteria = Y[:, 2] # for MAOM pool, change the number to 0
+    fungi = Y[:, 4] # for POM pool, change the number to 1
 
-    # 分箱取平均
+    # average
     bins = np.linspace(ref_cue.min(), ref_cue.max(), BINS + 1)
     bin_centers = (bins[:-1] + bins[1:]) / 2
     b_means, f_means = [], []
@@ -91,16 +88,16 @@ for npz_path in npz_files:
             b_means.append(np.nan)
             f_means.append(np.nan)
 
-    # 绘图（Fungi = 实线, Bacteria = 虚线）
+    
     plt.plot(bin_centers, f_means, color=color, lw=2)           # SEF
     plt.plot(bin_centers, b_means, color=color, ls="--", lw=2)  # SEB
 
-# 双图例
+
 ph_handles = [mpatches.Patch(color=ph_color_map[ph], label=f"pH {ph}")
               for ph in sorted(ph_color_map)]
 style_handles = [
-    mlines.Line2D([], [], color="black", lw=2, label="SEF"),       # fungi = solid
-    mlines.Line2D([], [], color="black", lw=2, ls="--", label="SEB")  # bacteria = dashed
+    mlines.Line2D([], [], color="black", lw=2, label="SEF"),       # For POM pool, change "SEF" to "POM pool"
+    mlines.Line2D([], [], color="black", lw=2, ls="--", label="SEB")  # For MAOM pool, change "SEB" to "MAOM pool"
 ]
 
 first = plt.legend(
@@ -119,7 +116,7 @@ second = plt.legend(
 )
 plt.gca().add_artist(first)
 
-# ---- X/Y 轴标题：将 x 轴改名为 RCL ----
+
 plt.xlabel("RCL", fontstyle="italic")
 
 plt.ylabel("Mean content")
@@ -130,4 +127,4 @@ plt.tight_layout()
 plt.savefig(OUT_PDF, format="pdf")
 plt.show()
 
-print(f"✅ 图已保存：{OUT_PDF}")
+print(f"✅ plot save as：{OUT_PDF}")

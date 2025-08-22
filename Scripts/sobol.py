@@ -7,6 +7,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 from matplotlib.lines import Line2D
 import warnings
+from pathlib import Path 
 
 # ---------- SUPPRESS WARNINGS ----------
 warnings.filterwarnings("ignore", message="Glyph .* missing from font")
@@ -26,7 +27,12 @@ plt.rcParams.update({
     'mathtext.default': 'it'
 })
 # ------------------------------------------
-
+# ==== Defaults relative to this file ====
+BASE_DIR = Path(__file__).resolve().parent         # .../Script
+DEFAULT_DATA_DIR = BASE_DIR.parent / "Result_data"       # sibling: .../Excel
+DEFAULT_OUT_DIR  = BASE_DIR / "plots"              # save PDFs here
+DEFAULT_OUT_DIR.mkdir(parents=True, exist_ok=True)
+# ========================================
 # ========== Config (edit if needed) ========== #
 TEMPERATURES = [25, 27]
 PH_LIST = ["3.5", "4.5", "6.5", "5.5", "8"]
