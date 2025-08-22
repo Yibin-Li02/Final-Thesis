@@ -42,7 +42,7 @@ FILES = [
 ]
 
 # Save PDFs next to the script (in a subfolder)
-OUT_DIR = str((BASE_DIR / "plots").resolve())
+OUT_DIR = str((BASE_DIR / "Result_plots").resolve())
 os.makedirs(OUT_DIR, exist_ok=True)
 
 PH_COLOURS = {
